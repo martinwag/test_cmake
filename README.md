@@ -7,6 +7,7 @@ this will create a debug and release folder, containing scripts for initial cmak
 go into release and run 
 
 cmake_firstrun.sh
+
 make package
 
 this will fail because of cross dependency between uart.h and syslog.h
