@@ -14,3 +14,5 @@ this will fail because of cross dependency between uart.h and syslog.h
 open src/drivers/CMakeLists.txt and uncomment hack in target_include_directories function
 
 it should work now
+
+tested on debian 8 jessie, cmake version 3.0.2
