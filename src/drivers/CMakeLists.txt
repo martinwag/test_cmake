@@ -1,20 +1,27 @@
-## ---- Targets -------------------------------------------------------------------
-add_library(drivers
-    uart.c
+## ---- Library name---------------------------------------------------------------
+set(lib
+    ${drivers}
 )
 
-target_include_directories(drivers PRIVATE .)
-target_link_libraries(drivers PRIVATE log)
+## ---- Sources -------------------------------------------------------------------
+set(sources
+    uart.c
+    log-via-uart.c
+)
 
-add_library(uart-logging1 log-via-uart.c)
-target_link_libraries(uart-logging1
-    PRIVATE driver log)
-target_compile_definitions(uart-logging1 PRIVATE USE_UART=1)
+## ---- Header includes -----------------------------------------------------------
+set(headers
+    .
+)
 
-add_library(uart-logging2 log-via-uart.c)
-target_link_libraries(uart-logging2
-    PRIVATE driver log)
-target_compile_definitions(uart-logging2 PRIVATE USE_UART=2)
+## ---- Link Dependencies ---------------------------------------------------------
+set(link_dependencies
+    ${log}
+)
 
-install(DIRECTORY . DESTINATION ${INCLUDE_INSTALL_DIR} FILES_MATCHING PATTERN "*.h")
+## ---- Targets -------------------------------------------------------------------
+add_library(${lib} ${sources})
+target_include_directories(${lib} PRIVATE ${headers})
+target_link_libraries(${lib} PRIVATE ${link_dependencies})
 
+install(DIRECTORY ${headers} DESTINATION ${INCLUDE_INSTALL_DIR} FILES_MATCHING PATTERN "*.h")

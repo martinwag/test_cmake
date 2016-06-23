@@ -1,12 +1,28 @@
+
+## ---- Library name---------------------------------------------------------------
+set(lib
+    ${terminal}
+)
+
 ## ---- Sources -------------------------------------------------------------------
 set(sources
+    terminal.c
+)
+
+## ---- Header includes -----------------------------------------------------------
+set(headers
+#    "${CMAKE_CURRENT_SOURCE_DIR}/" todo geht . ?
+    .
+)
+
+## ---- Link Dependencies ---------------------------------------------------------
+set(link_dependencies
+    ${log}
 )
 
 ## ---- Targets -------------------------------------------------------------------
-add_library(terminal
-    terminal.c
-)
-target_include_directories(terminal PRIVATE .)
-target_link_libraries(terminal PRIVATE log)
+add_library(${lib} ${sources})
+target_include_directories(${lib} PRIVATE ${headers})
+target_link_libraries(${lib} PRIVATE ${link_dependencies})
 
-install(DIRECTORY . DESTINATION ${INCLUDE_INSTALL_DIR} FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY ${headers} DESTINATION ${INCLUDE_INSTALL_DIR} FILES_MATCHING PATTERN "*.h")
