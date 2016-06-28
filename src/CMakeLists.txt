@@ -19,18 +19,15 @@ add_subdirectory(${drivers})
 add_subdirectory(${terminal})
 
 ## ---- Targets -------------------------------------------------------------------
-add_library(${product} INTERFACE)
-target_link_libraries(${product} INTERFACE ${drivers} ${terminal})
-install(TARGETS ${product} DESTINATION ${ARCHIVE_INSTALL_DIR})
 
-## better to use export - if possible, it generates a .cmake-file, which can be
-## included by cmake with all targets (especially bsp here) - setting libraries and include-dirs
-##
-## or if you need to combine the .a's use your platforms libtool.
+# Workaround for the lack of post_install steps. stackoverflow.com/questions/9998679
+# we HAVE to include a subdir to have install(SCRIPT...) evaluated last. We also have
+# to use a SCRIPT instead of CODE because SCRIPT is evaluated at cpack time.
 
-#install(EXPORT ${product} DESTINATION .)
-
-
-
-
+# Make sure this is the LAST directory added.
+add_subdirectory(../buildsupport/postinstall postinstall_bin)
+# Add any variables you need during post install.
+install (CODE "set(ARCHIVE_INSTALL_DIR \"${ARCHIVE_INSTALL_DIR}\")")
+install (CODE "set(PRODUCT \"lib${product}\")")
+install (CODE "set(CMAKE_AR \"${CMAKE_AR}\")")
 

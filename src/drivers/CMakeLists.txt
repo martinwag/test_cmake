@@ -23,5 +23,6 @@ set(link_dependencies
 add_library(${lib} ${sources})
 target_include_directories(${lib} PRIVATE ${headers})
 target_link_libraries(${lib} PRIVATE ${link_dependencies})
+install(TARGETS ${lib} DESTINATION ${ARCHIVE_INSTALL_DIR})
 
 install(DIRECTORY ${headers} DESTINATION ${INCLUDE_INSTALL_DIR} FILES_MATCHING PATTERN "*.h")
